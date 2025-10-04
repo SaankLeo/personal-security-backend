@@ -15,24 +15,24 @@ All features run locally — your data never leaves your computer.
 
 Clone the repo:
 
-git clone https://github.com/SaankLeo/personal-security-backend.git
-cd personal-security-backend
+ git clone https://github.com/SaankLeo/personal-security-backend.git
+ cd personal-security-backend
 
 
 Set up the virtual environment:
 
-python -m venv venv
-venv\Scripts\activate
+ python -m venv venv
+ venv\Scripts\activate
 
 
 Install dependencies:
 
-pip install -r requirements.txt
+ pip install -r requirements.txt
 
 
 Run the backend:
 
-python backend/app.py
+ python backend/app.py
 
 
 Your Flask server will start at:
