@@ -4,6 +4,9 @@ import os
 from breach import pwned_count
 from scanner import scan
 from osint import check_username
+from flask import Flask
+
+
 
 app = Flask(__name__, static_folder='../frontend', static_url_path='')
 CORS(app)
