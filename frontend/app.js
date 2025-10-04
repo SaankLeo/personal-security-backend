@@ -1,7 +1,12 @@
-const api = url => (path, opts) => fetch(url + path, Object.assign({headers: {'Content-Type':'application/json'}}, opts));
+// --- CONFIG ---
+const api = url => (path, opts) => fetch(url + path, Object.assign({
+  headers: { 'Content-Type': 'application/json' }
+}, opts));
+
+// Change this to your backend URL when deployed on Render:
 const call = api('http://127.0.0.1:5000');
 
-// Landing page transition
+// ----- LANDING PAGE TRANSITION -----
 const landing = document.getElementById('landing');
 const startBtn = document.getElementById('start-btn');
 const layout = document.querySelector('.layout');
@@ -23,6 +28,7 @@ const pwdCheckBtn = document.getElementById('pwd-check');
 const pwdGenBtn = document.getElementById('pwd-gen');
 const pwdResult = document.getElementById('pwd-result');
 
+// Toggle show/hide password
 pwdToggle.addEventListener('click', () => {
   if (pwdInput.type === 'password') {
     pwdInput.type = 'text';
@@ -35,6 +41,7 @@ pwdToggle.addEventListener('click', () => {
   }
 });
 
+// Generate random secure password
 function generatePassword(length = 16) {
   const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:,.<>?";
   let out = '';
@@ -51,12 +58,13 @@ pwdGenBtn.addEventListener('click', () => {
   pwdToggle.title = 'Hide password';
 });
 
+// Check password breach
 pwdCheckBtn.addEventListener('click', async () => {
   const p = pwdInput.value;
   if (!p) return alert('Enter a password first.');
   pwdResult.innerText = 'Checking...';
   try {
-    const res = await call('/api/password/check', {method: 'POST', body: JSON.stringify({password: p})});
+    const res = await call('/api/password/check', { method: 'POST', body: JSON.stringify({ password: p }) });
     const j = await res.json();
     if (j.error) return pwdResult.innerText = `Error: ${j.error}`;
     pwdResult.innerText = (j.pwned_count ?? 0) === 0
@@ -67,6 +75,7 @@ pwdCheckBtn.addEventListener('click', async () => {
   }
 });
 
+
 // ----- PORT SCAN -----
 const scanBtn = document.getElementById('scan-btn');
 const scanOut = document.getElementById('scan-result');
@@ -75,20 +84,32 @@ const hostInput = document.getElementById('host-input');
 scanBtn.addEventListener('click', async () => {
   let host = hostInput.value.trim() || '127.0.0.1';
   scanOut.innerText = `Scanning ${host}...`;
+
   try {
-    const res = await call('/api/scan/ports', {method: 'POST', body: JSON.stringify({host})});
+    const res = await call('/api/scan/ports', {
+      method: 'POST',
+      body: JSON.stringify({ host })
+    });
     const j = await res.json();
-    if (j.error) { scanOut.innerText = j.error; return; }
+
+    if (j.error) {
+      scanOut.innerText = j.error;
+      return;
+    }
+
     const rows = Object.entries(j.results)
       .sort(([a], [b]) => a - b)
       .map(([p, open]) => `${p.padStart(5)} → ${open ? 'OPEN' : 'closed'}`);
-    scanOut.innerText = rows.join('\\n');
+
+    // Display formatted output
+    scanOut.innerHTML = rows.join("\n").replace(/\n/g, "<br>");
   } catch (err) {
     scanOut.innerText = `Scan failed: ${err.message}`;
   }
 });
 
-// ----- OSINT -----
+
+// ----- OSINT SECTION -----
 const osintBtn = document.getElementById('osint-btn');
 const osintUser = document.getElementById('osint-user');
 const osintOut = document.getElementById('osint-result');
@@ -101,22 +122,25 @@ osintBtn.addEventListener('click', async () => {
     const res = await fetch(`http://127.0.0.1:5000/api/osint/${encodeURIComponent(u)}`);
     const j = await res.json();
     if (j.error) return osintOut.innerText = `Error: ${j.error}`;
+
     const sites = j.found || {};
     if (Object.keys(sites).length === 0) {
       osintOut.innerText = 'No matches found on supported sites.';
     } else {
-      let text = '';
+      // Make clickable links
+      let html = '';
       for (const [site, url] of Object.entries(sites)) {
-        text += `• ${site.toUpperCase()} → ${url}\\n`;
+        html += `• <strong>${site.toUpperCase()}</strong> → <a href="${url}" target="_blank" style="color:#38bdf8;">${url}</a><br>`;
       }
-      osintOut.innerText = text.trim();
+      osintOut.innerHTML = html.trim();
     }
   } catch (err) {
     osintOut.innerText = `Request failed: ${err.message}`;
   }
 });
 
-// Tab navigation (switch sections)
+
+// ----- TAB NAVIGATION -----
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabs = document.querySelectorAll('.tab');
 
@@ -124,7 +148,6 @@ tabButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     tabButtons.forEach(b => b.classList.remove('active'));
     tabs.forEach(t => t.classList.remove('active'));
-
     btn.classList.add('active');
     document.getElementById(btn.dataset.tab).classList.add('active');
   });
