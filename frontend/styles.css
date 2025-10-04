@@ -1,0 +1,281 @@
+:root {
+  --bg: #0f172a;
+  --card-bg: #1e293b;
+  --accent: #38bdf8;
+  --accent-hover: #7dd3fc;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ===== LANDING PAGE ===== */
+.landing {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0f172a, #1e3a8a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #e2e8f0;
+  text-align: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.landing-content {
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.landing h1 {
+  font-size: 2.5rem;
+  color: #38bdf8;
+  margin-bottom: 1rem;
+}
+
+.landing p {
+  font-size: 1.1rem;
+  color: #cbd5e1;
+  margin-bottom: 2rem;
+}
+
+.landing button {
+  background-color: #38bdf8;
+  color: #0f172a;
+  border: none;
+  padding: 0.9rem 1.8rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.landing button:hover {
+  background-color: #7dd3fc;
+  transform: translateY(-2px);
+}
+
+.landing.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.layout.hidden {
+  display: none;
+}
+
+
+/* ====== MAIN LAYOUT ====== */
+.layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* ====== SIDEBAR ====== */
+.sidebar {
+  width: 220px;
+  background: #111827;
+  border-right: 1px solid #1e293b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  gap: 1.2rem;
+  flex-shrink: 0;
+}
+
+.sidebar h1 {
+  color: var(--accent);
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.sidebar .tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 1rem;
+  padding: 0.7rem 1rem;
+  width: 100%;
+  text-align: left;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sidebar .tab-btn:hover {
+  background: #1e293b;
+  color: var(--text);
+}
+
+.sidebar .tab-btn.active {
+  background: var(--accent);
+  color: #0f172a;
+  font-weight: 600;
+}
+
+/* ====== CONTENT AREA ====== */
+.content {
+  flex: 1;
+  background-color: var(--bg);
+  padding: 2rem 3rem;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.tab {
+  display: none;
+  width: 100%;
+  max-width: 600px;
+  background: var(--card-bg);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  animation: fade 0.3s ease;
+}
+
+.tab.active {
+  display: block;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ====== INPUTS & BUTTONS ====== */
+input,
+button {
+  font-family: inherit;
+}
+
+input {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border: 1px solid #334155;
+  border-radius: 0.5rem 0 0 0.5rem;
+  background-color: #0f172a;
+  color: var(--text);
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input::placeholder {
+  color: #64748b;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background-color: #162036;
+  box-shadow: 0 0 0 2px rgba(56,189,248,0.3);
+}
+
+button {
+  background-color: var(--accent);
+  color: #0f172a;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  font-weight: 600;
+  border-radius: 0 0.5rem 0.5rem 0;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+button:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+/* ====== CONTROL GROUP (input + button) ====== */
+.controls {
+  display: flex;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.controls input {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.controls button {
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+/* ====== PASSWORD INPUT WITH ICON ====== */
+.pwd-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.pwd-row input {
+  flex: 1;
+  padding-right: 2.5rem;
+  border-radius: 0.5rem;
+}
+
+.icon-btn {
+  position: absolute;
+  right: 0.6rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  transition: transform 0.2s ease;
+}
+
+.icon-btn svg {
+  stroke: var(--accent);
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+}
+
+/* ====== RESULT BOX ====== */
+.result {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  font-family: monospace;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  color: #a5f3fc;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #111827;
+  border-top: 1px solid #1e293b;
+  color: var(--muted);
+  font-size: 0.9rem;
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Security Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Landing Page -->
+  <section id="landing" class="landing active">
+    <div class="landing-content">
+      <h1>🛡️ Personal Security Dashboard</h1>
+      <p>Your all-in-one toolkit to check password strength, network safety, and digital footprint.</p>
+      <button id="start-btn">Enter Dashboard</button>
+    </div>
+  </section>
+
+  <!-- Dashboard Layout -->
+  <div class="layout hidden">
+    <nav class="sidebar">
+      <h1>🛡️ PSD</h1>
+      <button class="tab-btn active" data-tab="password">🔐 Password</button>
+      <button class="tab-btn" data-tab="network">🌐 Network</button>
+      <button class="tab-btn" data-tab="osint">🕵️ OSINT</button>
+    </nav>
+
+    <main class="content">
+      <!-- Password Tab -->
+      <section id="password" class="tab active">
+        <h2>Password Health Check</h2>
+        <p>Check if your password has appeared in known data breaches.</p>
+
+        <div class="pwd-row">
+          <input id="pwd-input" type="password" placeholder="Enter password" />
+          <button id="pwd-toggle" class="icon-btn" title="Show password">
+            <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="controls">
+          <button id="pwd-check">Check Breach</button>
+          
+        </div>
+
+        <div class="controls">
+          
+          <button id="pwd-gen">Generate Password</button>
+        </div>
+
+        <div id="pwd-result" class="result"></div>
+      </section>
+
+      <!-- Network Tab -->
+      <section id="network" class="tab">
+        <h2>Network Safety (Port Scan)</h2>
+        <p>Scan your localhost to check which common ports are open.</p>
+
+        <div class="controls">
+          <input id="host-input" type="text" placeholder="Enter host (default: localhost)" />
+          <button id="scan-btn">Scan</button>
+        </div>
+
+        <pre id="scan-result" class="result"></pre>
+      </section>
+
+      <!-- OSINT Tab -->
+      <section id="osint" class="tab">
+        <h2>Digital Footprint (OSINT)</h2>
+        <p>Search for your username across major public platforms.</p>
+
+        <div class="controls">
+          <input id="osint-user" type="text" placeholder="Enter username (e.g. torvalds)" />
+          <button id="osint-btn">Search</button>
+        </div>
+
+        <pre id="osint-result" class="result"></pre>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>Built for cybersecurity awareness | Created by Saankhya</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
